@@ -700,6 +700,7 @@ radio.onReceivedString(function (receivedString) {
             }
             network__CpuCycle_Post__Management_Func()
         } else if (_system_Hw_DeviceType__Now__Id_Int == _system_Hw_DeviceType__Null__ID_INT) {
+            serial.writeLine("* 26-0118-0300:" + receivedString + "|" + _system_Hw_DeviceType__Now__Id_Int + "|" + _system_Hw_DeviceType__Null__ID_INT)
             quest_Note_3.quest_Show_String_For_Note_Big_Func(
             "Network_Message Received' Dual Usage:: Usage #2: Designate this micro:bit as Bot to *Complete* Network_Pairing w/ Bot"
             )
@@ -713,6 +714,9 @@ radio.onReceivedString(function (receivedString) {
             )
             _system_Sw_ModeState__Now__Id_Int = _system_Sw_ModeState__Run__AndShow_02_GroupChannelNum__ID_INT
             setup_BotOnly_Func()
+if (true) {
+                serial.writeLine("* 26-0118-0310:" + receivedString + "|" + _system_Hw_DeviceType__Now__Id_Int + "|" + _system_Hw_DeviceType__Null__ID_INT)
+            }
         }
         if (true) {
             quest_Note_6.quest_Show_String_For_Note_Big_Func(
@@ -762,6 +766,9 @@ input.onButtonPressed(Button.B, function () {
     }
 })
 function botModeInIdle_Fn () {
+    quest_Note_5.quest_Show_String_For_Note_Small_Func(
+    "/\\ 'joystickbit.initJoystickBit()' Prevents Button-Pressed = False_+"
+    )
     quest_Note_1.quest_Show_String_For_Note_Small_Func(
     "'if' statements 'and-ed' to return 'IdleMode=true'"
     )
@@ -997,84 +1004,75 @@ basic.forever(function () {
     quest_Note_3.quest_Show_String_For_Note_Big_Func(
     "Network-Cycle Management Stack"
     )
-    if (false) {
-        serial.writeString("*** A:" + quest_General.quest_Get_Number_WithColumnPadding_AsStringOut_Func(
-        controller__Polar_OriginAtCenter__MagnitudePixel__Int,
-        8,
-        2
-        ) + "|" + quest_General.quest_Get_Number_WithColumnPadding_AsStringOut_Func(
-        controller__Polar_OriginAtCenter__IdleCount_Int,
-        8,
-        2
-        ) + "|" + quest_General.quest_Get_Number_WithColumnPadding_AsStringOut_Func(
-        controller__Polar_OriginAtCenter__IdleCount_ModulusNetworkThrottle_Now_Int,
-        8,
-        2
-        ) + "|" + quest_General.quest_Get_Number_WithColumnPadding_AsStringOut_Func(
-        controller__Polar_OriginAtCenter__IdleCount_ModulusNetworkThrottle_ADD_INT,
-        8,
-        2
-        ) + "|")
-    }
-    if (false) {
-        serial.writeLine("*** C: " + "Joy_X:" + quest_General.quest_Get_Number_WithColumnPadding_AsStringOut_Func(
-        joystickbit.getRockerValue(joystickbit.rockerType.X),
-        8,
-        2
-        ) + " Joy_Y:" + quest_General.quest_Get_Number_WithColumnPadding_AsStringOut_Func(
-        joystickbit.getRockerValue(joystickbit.rockerType.Y),
-        8,
-        2
-        ))
-    }
-    if (true) {
-        network__CpuCycle_Post__Management_Func()
-quest_Note_4.quest_Show_String_For_Note_Small_Func(
-        "See if this will slow down to column-align serial-prints"
+    if (_system_Hw_DeviceType__Now__Id_Int == _system_Hw_DeviceType__Controller_Joystick__ID_INT) {
+        quest_Note_5.quest_Show_String_For_Note_Small_Func(
+        "/\\ Controller-Only to Avoid Premature Auto-Pair"
         )
-        quest_Note_1.quest_Show_String_For_Note_Small_Func(
-        "See if this will slow down to column-align serial-prints"
-        )
-        quest_Note_1.quest_Show_String_For_Note_Small_Func(
-        "20ms (min standard), 100ms, 10000ms (noticably slower, 1sec, but no help)"
-        )
-        quest_Timer.quest_Set_ContinueCurrentState_CountdownTimer_Func(20, quest_Time_Units_Enum.Milliseconds)
-    }
-    if (botModeInIdle_Fn()) {
-        quest_Note_1.quest_Show_String_For_Note_Small_Func(
-        "Avoid sending 'stop' to not interfere.. "
-        )
-        quest_Note_1.quest_Show_String_For_Note_Small_Func(
-        "..turbo-max-motion & other user-inputs pressed"
-        )
-        quest_Note_1.quest_Show_String_For_Note_Small_Func(
-        "Avoid sending 'stop' after above threshold-max,.."
-        )
-        quest_Note_1.quest_Show_String_For_Note_Small_Func(
-        "..to not flood Led-5x5 and Network"
-        )
-        if (controller__Polar_OriginAtCenter__IdleCount_Int % controller__Polar_OriginAtCenter__IdleCount_ModulusNetworkThrottle_Now_Int == 0) {
-            if (true) {
-                images.createImage(`
-                    . . . . .
-                    . . . . .
-                    . . # . .
-                    . . . . .
-                    . . . . .
-                    `).showImage(0, 0)
-                quest_Note_1.quest_Show_String_For_Note_Small_Func(
-                "Zero values if not exceed 'Deadzone_AsIdle'"
-                )
-                radio.sendString("stop")
-                controller__Polar_OriginAtCenter__IdleCount_Int = 0
-                controller__Polar_OriginAtCenter__IdleCount_ModulusNetworkThrottle_Now_Int += controller__Polar_OriginAtCenter__IdleCount_ModulusNetworkThrottle_ADD_INT
-                serial.writeLine("*** B: STOP" + "")
-            }
-        }
-        controller__Polar_OriginAtCenter__IdleCount_Int += 1
         if (false) {
-            controller__Polar_OriginAtCenter__IdleCount_Int = 0
-            if (controller__Polar_OriginAtCenter__IdleCount_Int % 5 == 0) {
+            serial.writeString("*** A1:" + quest_General.quest_Get_Number_WithColumnPadding_AsStringOut_Func(
+            controller__Polar_OriginAtCenter__MagnitudePixel__Int,
+            8,
+            2
+            ) + "|" + quest_General.quest_Get_Number_WithColumnPadding_AsStringOut_Func(
+            controller__Polar_OriginAtCenter__IdleCount_Int,
+            8,
+            2
+            ) + "|" + quest_General.quest_Get_Number_WithColumnPadding_AsStringOut_Func(
+            controller__Polar_OriginAtCenter__IdleCount_ModulusNetworkThrottle_Now_Int,
+            8,
+            2
+            ) + "|" + quest_General.quest_Get_Number_WithColumnPadding_AsStringOut_Func(
+            controller__Polar_OriginAtCenter__IdleCount_ModulusNetworkThrottle_ADD_INT,
+            8,
+            2
+            ) + "|")
+        }
+        if (false) {
+            serial.writeLine("*** A2: " + "Joy_X:" + quest_General.quest_Get_Number_WithColumnPadding_AsStringOut_Func(
+            joystickbit.getRockerValue(joystickbit.rockerType.X),
+            8,
+            2
+            ) + " Joy_Y:" + quest_General.quest_Get_Number_WithColumnPadding_AsStringOut_Func(
+            joystickbit.getRockerValue(joystickbit.rockerType.Y),
+            8,
+            2
+            ))
+        }
+        if (true) {
+            network__CpuCycle_Post__Management_Func()
+quest_Note_4.quest_Show_String_For_Note_Small_Func(
+            "See if this will slow down to column-align serial-prints"
+            )
+            quest_Note_1.quest_Show_String_For_Note_Small_Func(
+            "See if this will slow down to column-align serial-prints"
+            )
+            quest_Note_1.quest_Show_String_For_Note_Small_Func(
+            "20ms (min standard), 100ms, 10000ms (noticably slower, 1sec, but no help)"
+            )
+            quest_Timer.quest_Set_ContinueCurrentState_CountdownTimer_Func(20, quest_Time_Units_Enum.Milliseconds)
+            quest_Note_5.quest_Show_String_For_Note_Small_Func(
+            "TEMP FIX \\/\\/"
+            )
+            serial.writeLine("* 26-0118-0600 :" + controller__Polar_OriginAtCenter__IdleCount_Int % controller__Polar_OriginAtCenter__IdleCount_ModulusNetworkThrottle_Now_Int + "|" + controller__Polar_OriginAtCenter__IdleCount_Int + "|" + controller__Polar_OriginAtCenter__IdleCount_ModulusNetworkThrottle_Now_Int + "|" + botModeInIdle_Fn())
+        }
+        if (botModeInIdle_Fn()) {
+            quest_Note_1.quest_Show_String_For_Note_Small_Func(
+            "Avoid sending 'stop' to not interfere.. "
+            )
+            quest_Note_1.quest_Show_String_For_Note_Small_Func(
+            "..turbo-max-motion & other user-inputs pressed"
+            )
+            quest_Note_1.quest_Show_String_For_Note_Small_Func(
+            "Avoid sending 'stop' after above threshold-max,.."
+            )
+            quest_Note_1.quest_Show_String_For_Note_Small_Func(
+            "..to not flood Led-5x5 and Network"
+            )
+            quest_Note_5.quest_Show_String_For_Note_Small_Func(
+            "TEMP FIX \\/\\/"
+            )
+            serial.writeLine("* 26-0118-0601 :" + controller__Polar_OriginAtCenter__IdleCount_Int % controller__Polar_OriginAtCenter__IdleCount_ModulusNetworkThrottle_Now_Int + "|" + controller__Polar_OriginAtCenter__IdleCount_Int + "|" + controller__Polar_OriginAtCenter__IdleCount_ModulusNetworkThrottle_Now_Int + "|" + botModeInIdle_Fn())
+            if (controller__Polar_OriginAtCenter__IdleCount_Int % controller__Polar_OriginAtCenter__IdleCount_ModulusNetworkThrottle_Now_Int == 0) {
                 if (true) {
                     images.createImage(`
                         . . . . .
@@ -1088,7 +1086,29 @@ quest_Note_4.quest_Show_String_For_Note_Small_Func(
                     )
                     radio.sendString("stop")
                     controller__Polar_OriginAtCenter__IdleCount_Int = 0
-                    serial.writeString("*** B: STOP" + "")
+                    controller__Polar_OriginAtCenter__IdleCount_ModulusNetworkThrottle_Now_Int += controller__Polar_OriginAtCenter__IdleCount_ModulusNetworkThrottle_ADD_INT
+                    serial.writeLine("*** B: STOP" + "")
+                }
+            }
+            controller__Polar_OriginAtCenter__IdleCount_Int += 1
+            if (false) {
+                controller__Polar_OriginAtCenter__IdleCount_Int = 0
+                if (controller__Polar_OriginAtCenter__IdleCount_Int % 5 == 0) {
+                    if (true) {
+                        images.createImage(`
+                            . . . . .
+                            . . . . .
+                            . . # . .
+                            . . . . .
+                            . . . . .
+                            `).showImage(0, 0)
+                        quest_Note_1.quest_Show_String_For_Note_Small_Func(
+                        "Zero values if not exceed 'Deadzone_AsIdle'"
+                        )
+                        radio.sendString("stop")
+                        controller__Polar_OriginAtCenter__IdleCount_Int = 0
+                        serial.writeString("*** B: STOP" + "")
+                    }
                 }
             }
         }
