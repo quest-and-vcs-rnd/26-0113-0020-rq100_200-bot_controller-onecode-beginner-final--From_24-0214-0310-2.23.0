@@ -929,6 +929,7 @@ setup_BotAndController_Func()
         )
     }
 }
+let _system_Github_VER_STRING = ""
 let controller__Polar_OriginAtCenter__MagnitudePixel__PreviousCycle__Int = 0
 let servoArm_DEFAULT_DEGREES_INT = 0
 let controller__Button_TriggerDelay__MSEC_INT = 0
@@ -1420,6 +1421,7 @@ basic.forever(function () {
     }
 })
 basic.forever(function () {
+    _system_Github_VER_STRING = "v0.2.1"
     quest_Note_1.quest_Show_String_For_Note_Small_Func(
     "©️ 2026 Quest Institute. All rights reserved."
     )
