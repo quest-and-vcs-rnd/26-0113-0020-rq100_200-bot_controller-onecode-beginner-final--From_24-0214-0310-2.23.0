@@ -1421,7 +1421,7 @@ basic.forever(function () {
     }
 })
 basic.forever(function () {
-    _system_Github_VER_STRING = "v0.2.1"
+    _system_Github_VER_STRING = "v0.2.2"
     quest_Note_1.quest_Show_String_For_Note_Small_Func(
     "©️ 2026 Quest Institute. All rights reserved."
     )
