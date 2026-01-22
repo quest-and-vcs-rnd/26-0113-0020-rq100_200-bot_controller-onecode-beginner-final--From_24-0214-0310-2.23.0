@@ -915,6 +915,16 @@ setup_BotAndController_Func()
         }
     }
     if (true) {
+        if (true) {
+            network_GroupChannel_MyBotAndController_Base0_Int = 55
+            quest_Note_1.quest_Show_String_For_Note_Small_Func(
+            "Appears 15 char max"
+            )
+            flashstorage.put("netGroupChannel", convertToText(network_GroupChannel_MyBotAndController_Base0_Int))
+            serial.writeLine("* 26-0121-1720:" + flashstorage.size() + "|" + flashstorage.get("netGroupChannel") + "->" + parseFloat(flashstorage.get("netGroupChannel")) + "|" + convertToText(network_GroupChannel_MyBotAndController_Base0_Int))
+        }
+    }
+    if (true) {
         quest_Note_6.quest_Show_String_For_Note_Big_Func(
         "Level 1: Variables_n_Constants_Not (Hardcode)"
         )
