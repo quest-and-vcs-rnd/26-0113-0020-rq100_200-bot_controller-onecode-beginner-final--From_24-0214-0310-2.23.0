@@ -1587,10 +1587,12 @@ quest_Note_4.quest_Show_String_For_Note_Small_Func(
             "20ms (min standard), 100ms, 10000ms (noticably slower, 1sec, but no help)"
             )
             quest_Timer.quest_Set_ContinueCurrentState_CountdownTimer_Func(20, quest_Time_Units_Enum.Milliseconds)
-            quest_Note_5.quest_Show_String_For_Note_Small_Func(
-            "TEMP FIX \\/\\/"
-            )
-            serial.writeLine("* 26-0118-0600 :" + controller__Polar_OriginAtCenter__IdleCount_Int % controller__Polar_OriginAtCenter__IdleCount_ModulusNetworkThrottle_Now_Int + "|" + controller__Polar_OriginAtCenter__IdleCount_Int + "|" + controller__Polar_OriginAtCenter__IdleCount_ModulusNetworkThrottle_Now_Int + "|" + botModeInIdle_Fn())
+            if (false) {
+                quest_Note_5.quest_Show_String_For_Note_Small_Func(
+                "TEMP FIX \\/\\/"
+                )
+                serial.writeLine("* 26-0118-0600:" + controller__Polar_OriginAtCenter__IdleCount_Int % controller__Polar_OriginAtCenter__IdleCount_ModulusNetworkThrottle_Now_Int + "|" + controller__Polar_OriginAtCenter__IdleCount_Int + "|" + controller__Polar_OriginAtCenter__IdleCount_ModulusNetworkThrottle_Now_Int + "|" + botModeInIdle_Fn())
+            }
         }
         if (botModeInIdle_Fn()) {
             quest_Note_1.quest_Show_String_For_Note_Small_Func(
@@ -1605,10 +1607,12 @@ quest_Note_4.quest_Show_String_For_Note_Small_Func(
             quest_Note_1.quest_Show_String_For_Note_Small_Func(
             "..to not flood Led-5x5 and Network"
             )
-            quest_Note_5.quest_Show_String_For_Note_Small_Func(
-            "TEMP FIX \\/\\/"
-            )
-            serial.writeLine("* 26-0118-0601 :" + controller__Polar_OriginAtCenter__IdleCount_Int % controller__Polar_OriginAtCenter__IdleCount_ModulusNetworkThrottle_Now_Int + "|" + controller__Polar_OriginAtCenter__IdleCount_Int + "|" + controller__Polar_OriginAtCenter__IdleCount_ModulusNetworkThrottle_Now_Int + "|" + botModeInIdle_Fn())
+            if (false) {
+                quest_Note_5.quest_Show_String_For_Note_Small_Func(
+                "TEMP FIX \\/\\/"
+                )
+                serial.writeLine("* 26-0118-0601:" + controller__Polar_OriginAtCenter__IdleCount_Int % controller__Polar_OriginAtCenter__IdleCount_ModulusNetworkThrottle_Now_Int + "|" + controller__Polar_OriginAtCenter__IdleCount_Int + "|" + controller__Polar_OriginAtCenter__IdleCount_ModulusNetworkThrottle_Now_Int + "|" + botModeInIdle_Fn())
+            }
             if (controller__Polar_OriginAtCenter__IdleCount_Int % controller__Polar_OriginAtCenter__IdleCount_ModulusNetworkThrottle_Now_Int == 0) {
                 if (true) {
                     images.createImage(`
