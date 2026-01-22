@@ -29,6 +29,81 @@ function settingsOverride_FlashMem_Save_Func () {
         serial.writeLine("* 26-0121-1730: settingsOverride_FlashMem_Save_Func:: FlashPairs=" + flashstorage.size() + "|FlashGet=" + flashstorage.get("netGroupChannel") + "->ParsedToNum=" + parseFloat(flashstorage.get("netGroupChannel")) + "|'network_GroupChannel_MyBotAndController_Base0_Int'=" + convertToText(network_GroupChannel_MyBotAndController_Base0_Int))
     }
 }
+function setup_System_Variables_2__UserCustomizable_Yes__Func () {
+    if (true) {
+        quest_Note_3.quest_Show_String_For_Note_Big_Func(
+        "THIS STACK CUSTOMIZABLE_YES"
+        )
+        quest_Note_3.quest_Show_String_For_Note_Small_Func(
+        "Variable & Constant: Settings"
+        )
+        if (true) {
+            quest_Note_1.quest_Show_String_For_Note_Small_Func(
+            "Following Gears are not used in Level_1 but need these null declarations... "
+            )
+            quest_Note_1.quest_Show_String_For_Note_Small_Func(
+            "...to allow Level_2 code to compile (though unused in Level_1)"
+            )
+            // jwc needed to fix compiler issue
+            motor_Power_Gear_01_MAX = 0
+            // jwc needed to fix compiler issue
+            motor_Power_Gear_02_MAX = 0
+        }
+        if (true) {
+            wuKong.mecanumWheel(
+            wuKong.ServoList.S1,
+            wuKong.ServoList.S3,
+            wuKong.ServoList.S0,
+            wuKong.ServoList.S2
+            )
+        }
+        if (false) {
+            quest_Note_1.quest_Show_String_For_Note_Small_Func(
+            "GeekServo: For servo_360: start at 180"
+            )
+            quest_Note_1.quest_Show_String_For_Note_Small_Func(
+            "Start w/ Label 'GeekServo' facing out for Servo_Arm_Left, for 180-degrees to face forward for optimum range"
+            )
+            servoArm_Now_Degrees_Int = 180
+            wuKong.setServoAngle(wuKong.ServoTypeList._360, wuKong.ServoList.S7, servoArm_Now_Degrees_Int)
+            wuKong.setServoAngle(wuKong.ServoTypeList._360, wuKong.ServoList.S6, servoArm_Now_Degrees_Int)
+            if (false) {
+                quest_Note_1.quest_Show_String_For_Note_Small_Func(
+                "Obsolete?"
+                )
+                servoArm_DOWN_MAX_DEGREES_INT = 0
+                servoArm_UP_MAX_DEGREES_INT = 90
+                servoArm_Left_UP_DEGREES_INT = 20
+                servoArm_Right_UP_DEGREES_INT = 45
+                servoArm_Left_Up_Bool = true
+                servoArm_Right_Up_Bool = true
+            }
+        }
+        if (true) {
+            servoArm_Increment_Degrees_Int = 15
+            servoArm_Left_Now_Degrees_Int = 0
+            servoArm_Right_Now_Degrees_Int = 0
+            servoArm_MIN_DEGREES_INT = 0
+            servoArm_MAX_DEGREES_INT = 220
+            quest_Note_1.quest_Show_String_For_Note_Small_Func(
+            "For ServoArm Buttons C/D: 1000ms :), 500ms"
+            )
+            controller__Button_TriggerDelay__MSEC_INT = 500
+        }
+        if (true) {
+            quest_Dashboard.quest_Show_Oled_Cleared_Func(
+            )
+            quest_Dashboard.quest_Show_String_For_Oled_SmallFont_Func(
+            "Hello  : )",
+            0,
+            0
+            )
+        }
+    }
+    quest_Note_6.quest_Show_String_For_Note_Big_Func(
+    "Level 2.1: Variables_n_Constants_Yes"
+    )
+}
 function screen_Clear_Func () {
     for (let index_X = 0; index_X <= 4; index_X++) {
         for (let index_Y = 0; index_Y <= 4; index_Y++) {
@@ -554,10 +629,13 @@ input.onButtonPressed(Button.AB, function () {
 // let motor_Power_Gear_01_MAX = 0
 // 
 // let device_Type_Controller_Bool = 0
-function setup_System_Variables__UserCustomizable_Not__Func () {
+function setup_System_Variables_1__UserCustomizable_Not__Func () {
     if (true) {
         quest_Note_3.quest_Show_String_For_Note_Big_Func(
         "THIS STACK CUSTOMIZABLE_NOT"
+        )
+        quest_Note_3.quest_Show_String_For_Note_Small_Func(
+        "Variable & Constant: Settings"
         )
         if (true) {
             quest_Note_6.quest_Show_String_For_Note_Small_Func(
@@ -638,76 +716,6 @@ function setup_System_Variables__UserCustomizable_Not__Func () {
             }
         }
     }
-    if (true) {
-        quest_Note_1.quest_Show_String_For_Note_Big_Func(
-        "Variable & Constant: Customizable Settings"
-        )
-        if (true) {
-            quest_Note_1.quest_Show_String_For_Note_Small_Func(
-            "Following Gears are not used in Level_1 but need these null declarations... "
-            )
-            quest_Note_1.quest_Show_String_For_Note_Small_Func(
-            "...to allow Level_2 code to compile (though unused in Level_1)"
-            )
-            // jwc needed to fix compiler issue
-            motor_Power_Gear_01_MAX = 0
-            // jwc needed to fix compiler issue
-            motor_Power_Gear_02_MAX = 0
-        }
-        if (true) {
-            wuKong.mecanumWheel(
-            wuKong.ServoList.S1,
-            wuKong.ServoList.S3,
-            wuKong.ServoList.S0,
-            wuKong.ServoList.S2
-            )
-        }
-        if (false) {
-            quest_Note_1.quest_Show_String_For_Note_Small_Func(
-            "GeekServo: For servo_360: start at 180"
-            )
-            quest_Note_1.quest_Show_String_For_Note_Small_Func(
-            "Start w/ Label 'GeekServo' facing out for Servo_Arm_Left, for 180-degrees to face forward for optimum range"
-            )
-            servoArm_Now_Degrees_Int = 180
-            wuKong.setServoAngle(wuKong.ServoTypeList._360, wuKong.ServoList.S7, servoArm_Now_Degrees_Int)
-            wuKong.setServoAngle(wuKong.ServoTypeList._360, wuKong.ServoList.S6, servoArm_Now_Degrees_Int)
-            if (false) {
-                quest_Note_1.quest_Show_String_For_Note_Small_Func(
-                "Obsolete?"
-                )
-                servoArm_DOWN_MAX_DEGREES_INT = 0
-                servoArm_UP_MAX_DEGREES_INT = 90
-                servoArm_Left_UP_DEGREES_INT = 20
-                servoArm_Right_UP_DEGREES_INT = 45
-                servoArm_Left_Up_Bool = true
-                servoArm_Right_Up_Bool = true
-            }
-        }
-        if (true) {
-            servoArm_Increment_Degrees_Int = 15
-            servoArm_Left_Now_Degrees_Int = 0
-            servoArm_Right_Now_Degrees_Int = 0
-            servoArm_MIN_DEGREES_INT = 0
-            servoArm_MAX_DEGREES_INT = 220
-            quest_Note_1.quest_Show_String_For_Note_Small_Func(
-            "For ServoArm Buttons C/D: 1000ms :), 500ms"
-            )
-            controller__Button_TriggerDelay__MSEC_INT = 500
-        }
-        if (true) {
-            quest_Dashboard.quest_Show_Oled_Cleared_Func(
-            )
-            quest_Dashboard.quest_Show_String_For_Oled_SmallFont_Func(
-            "Hello  : )",
-            0,
-            0
-            )
-        }
-    }
-    quest_Note_6.quest_Show_String_For_Note_Big_Func(
-    "Level 2.1: Variables_n_Constants_Yes"
-    )
 }
 radio.onReceivedString(function (receivedString) {
     if (true) {
@@ -816,7 +824,8 @@ function botModeInIdle_Fn () {
 }
 function setup_Code_For_System_Func () {
     if (true) {
-        setup_System_Variables__UserCustomizable_Not__Func()
+        setup_System_Variables_1__UserCustomizable_Not__Func()
+        setup_System_Variables_2__UserCustomizable_Yes__Func()
         settingsOverride_FlashMem_Load_Func()
         setup_Network_Func()
 setup_BotAndController_Func()
@@ -958,16 +967,6 @@ setup_BotAndController_Func()
 let _system_Github_VER_STRING = ""
 let controller__Polar_OriginAtCenter__MagnitudePixel__PreviousCycle__Int = 0
 let servoArm_DEFAULT_DEGREES_INT = 0
-let controller__Button_TriggerDelay__MSEC_INT = 0
-let servoArm_Right_Up_Bool = false
-let servoArm_Left_Up_Bool = false
-let servoArm_Right_UP_DEGREES_INT = 0
-let servoArm_Left_UP_DEGREES_INT = 0
-let servoArm_UP_MAX_DEGREES_INT = 0
-let servoArm_DOWN_MAX_DEGREES_INT = 0
-let servoArm_Now_Degrees_Int = 0
-let motor_Power_Gear_02_MAX = 0
-let motor_Power_Gear_01_MAX = 0
 let _system_Sw_ModeState__Test__ID_INT = 0
 let _system_Sw_ModeState__Autonomous__ID_INT = 0
 let screen_Delay_MSEC_INT = 0
@@ -985,11 +984,6 @@ let network_GroupChannel_MyBotAndController_Base0__Digit_Ones__Int = 0
 let network_GroupChannel_MyBotAndController_Base0__Digit_Tens__Int = 0
 let network_GroupChannel_MyBotAndController_Base0__Digit_Hundreds__Int = 0
 let _system_Hw_DeviceType__Bot__ID_INT = 0
-let servoArm_Right_Now_Degrees_Int = 0
-let servoArm_MAX_DEGREES_INT = 0
-let servoArm_MIN_DEGREES_INT = 0
-let servoArm_Increment_Degrees_Int = 0
-let servoArm_Left_Now_Degrees_Int = 0
 let controller__Polar_OriginAtCenter__IdleCount_ModulusNetworkThrottle_ADD_INT = 0
 let controller__Polar_OriginAtCenter__IdleCount_ModulusNetworkThrottle_Now_Int = 0
 let controller__Polar_OriginAtCenter__IdleCount_Int = 0
@@ -1001,6 +995,21 @@ let _system_Hw_DeviceType__Now__Id_Int = 0
 let _system_Sw_ModeState__Edit_GroupChannelNum__ID_INT = 0
 let _system_Sw_ModeState__Reset__ID_INT = 0
 let _system_Sw_ModeState__Now__Id_Int = 0
+let controller__Button_TriggerDelay__MSEC_INT = 0
+let servoArm_MAX_DEGREES_INT = 0
+let servoArm_MIN_DEGREES_INT = 0
+let servoArm_Right_Now_Degrees_Int = 0
+let servoArm_Left_Now_Degrees_Int = 0
+let servoArm_Increment_Degrees_Int = 0
+let servoArm_Right_Up_Bool = false
+let servoArm_Left_Up_Bool = false
+let servoArm_Right_UP_DEGREES_INT = 0
+let servoArm_Left_UP_DEGREES_INT = 0
+let servoArm_UP_MAX_DEGREES_INT = 0
+let servoArm_DOWN_MAX_DEGREES_INT = 0
+let servoArm_Now_Degrees_Int = 0
+let motor_Power_Gear_02_MAX = 0
+let motor_Power_Gear_01_MAX = 0
 let screenBrightness_Heartbeat_Count_Int = 0
 let screen_XY_Brightness_Old_Num = 0
 let screen_Y_Old_Num = 0
@@ -1507,6 +1516,28 @@ basic.forever(function () {
     }
 })
 basic.forever(function () {
+    quest_Note_6.quest_Show_String_For_Note_Big_Func(
+    ""
+    )
+    if (false) {
+        quest_Note_1.quest_Show_String_For_Note_Small_Func(
+        "Error: Unknown Msg"
+        )
+        // //jwc o roboQuest.powerMotorsViaBlueRedBlackPins(PortGroup_BlueRedBlack__PortIds__Enum.S1_MotorLeft__S0_MotorRight, motor_Power_ZERO_INT, motor_Power_ZERO_INT)
+        quest_Motors.quest_Set_PowerMotorsViaBlueRedBlackPins_Func(
+        quest_PortGroup_BlueRedBlack_PortIds_Enum.S1_MotorWheel_Left__S0_MotorWheel_Right,
+        0,
+        0
+        )
+        if (true) {
+            quest_Note_1.quest_Show_String_For_Note_Small_Func(
+            "For now, all 4 corners = Error: Unknown Msg"
+            )
+            screen_IconMessage_Func("error")
+        }
+    }
+})
+basic.forever(function () {
     quest_Note_3.quest_Show_String_For_Note_Big_Func(
     "Network-Cycle Management Stack"
     )
@@ -1617,28 +1648,6 @@ quest_Note_4.quest_Show_String_For_Note_Small_Func(
                     }
                 }
             }
-        }
-    }
-})
-basic.forever(function () {
-    quest_Note_6.quest_Show_String_For_Note_Big_Func(
-    ""
-    )
-    if (false) {
-        quest_Note_1.quest_Show_String_For_Note_Small_Func(
-        "Error: Unknown Msg"
-        )
-        // //jwc o roboQuest.powerMotorsViaBlueRedBlackPins(PortGroup_BlueRedBlack__PortIds__Enum.S1_MotorLeft__S0_MotorRight, motor_Power_ZERO_INT, motor_Power_ZERO_INT)
-        quest_Motors.quest_Set_PowerMotorsViaBlueRedBlackPins_Func(
-        quest_PortGroup_BlueRedBlack_PortIds_Enum.S1_MotorWheel_Left__S0_MotorWheel_Right,
-        0,
-        0
-        )
-        if (true) {
-            quest_Note_1.quest_Show_String_For_Note_Small_Func(
-            "For now, all 4 corners = Error: Unknown Msg"
-            )
-            screen_IconMessage_Func("error")
         }
     }
 })
