@@ -13,6 +13,7 @@ function screen_PlotNewDot_ClearOldDot_WithHeartbeat_Func (screen_x_new_num: num
 }
 function settingsOverride_FlashMem_Save_Func () {
     if (true) {
+        //// jwc 26-0122-1230: Phase 2A - Expanded to save all 10 config settings
         if (false) {
             quest_Note_1.quest_Show_String_For_Note_Small_Func(
             "\\/ For Testing"
@@ -25,8 +26,24 @@ function settingsOverride_FlashMem_Save_Func () {
         quest_Note_1.quest_Show_String_For_Note_Small_Func(
         "Reflashing Code seems to clear Flash"
         )
+        
+        //// jwc 26-0122-1230: Save all 10 configuration settings to flash
+        flashstorage.put("groupChanl", convertToText(config_groupChanl))
+        flashstorage.put("motorFwd", convertToText(config_motorFwd))
+        flashstorage.put("motorBwd", convertToText(config_motorBwd))
+        flashstorage.put("motorTurn", convertToText(config_motorTurn))
+        flashstorage.put("turboFwd", convertToText(config_turboFwd))
+        flashstorage.put("turboBwd", convertToText(config_turboBwd))
+        flashstorage.put("turboTurn", convertToText(config_turboTurn))
+        flashstorage.put("servoMin", convertToText(config_servoMin))
+        flashstorage.put("servoMax", convertToText(config_servoMax))
+        flashstorage.put("servoInc", convertToText(config_servoInc))
+        
+        //// jwc 26-0122-1230: Also update legacy channel variable for backward compatibility
+        network_GroupChannel_MyBotAndController_Base0_Int = config_groupChanl
         flashstorage.put("netGroupChannel", convertToText(network_GroupChannel_MyBotAndController_Base0_Int))
-        serial.writeLine("* 26-0121-1730: settingsOverride_FlashMem_Save_Func:: FlashPairs=" + flashstorage.size() + "|FlashGet=" + flashstorage.get("netGroupChannel") + "->ParsedToNum=" + parseFloat(flashstorage.get("netGroupChannel")) + "|'network_GroupChannel_MyBotAndController_Base0_Int'=" + convertToText(network_GroupChannel_MyBotAndController_Base0_Int))
+        
+        serial.writeLine("* 26-0122-1230: Config saved: Ch=" + config_groupChanl + " MotorFwd=" + config_motorFwd + " FlashPairs=" + flashstorage.size())
     }
 }
 function setup_System_Variables_2__UserCustomizable_Yes__Func () {
@@ -80,11 +97,12 @@ function setup_System_Variables_2__UserCustomizable_Yes__Func () {
             }
         }
         if (true) {
-            servoArm_Increment_Degrees_Int = 15
+            //// jwc 26-0122-1300: Phase 2A Step 3 - Replace hardcoded servo settings with config variables
+            servoArm_Increment_Degrees_Int = config_servoInc
             servoArm_Left_Now_Degrees_Int = 0
             servoArm_Right_Now_Degrees_Int = 0
-            servoArm_MIN_DEGREES_INT = 0
-            servoArm_MAX_DEGREES_INT = 220
+            servoArm_MIN_DEGREES_INT = config_servoMin
+            servoArm_MAX_DEGREES_INT = config_servoMax
             quest_Note_1.quest_Show_String_For_Note_Small_Func(
             "For ServoArm Buttons C/D: 1000ms :), 500ms"
             )
@@ -149,6 +167,7 @@ input.onLogoEvent(TouchButtonEvent.LongPressed, function () {
     }
 })
 function bot_Servo_Motors_Basic_Fn (network_ReceivedString_FromControllerJoystick_Str_ParamIn: string) {
+    //// jwc 26-0122-1300: Phase 2A Step 3 - Replace hardcoded values with config variables
     if (network_ReceivedString_FromControllerJoystick_Str_ParamIn == "forward") {
         images.createImage(`
             . . # . .
@@ -162,8 +181,8 @@ function bot_Servo_Motors_Basic_Fn (network_ReceivedString_FromControllerJoystic
         )
         quest_Motors.quest_Set_PowerMotorsViaBlueRedBlackPins_Func(
         quest_PortGroup_BlueRedBlack_PortIds_Enum.S1_MotorWheel_Left__S0_MotorWheel_Right,
-        60,
-        60
+        config_motorFwd,
+        config_motorFwd
         )
     } else if (network_ReceivedString_FromControllerJoystick_Str_ParamIn == "backward") {
         images.createImage(`
@@ -178,8 +197,8 @@ function bot_Servo_Motors_Basic_Fn (network_ReceivedString_FromControllerJoystic
         )
         quest_Motors.quest_Set_PowerMotorsViaBlueRedBlackPins_Func(
         quest_PortGroup_BlueRedBlack_PortIds_Enum.S1_MotorWheel_Left__S0_MotorWheel_Right,
-        -60,
-        -60
+        -config_motorBwd,
+        -config_motorBwd
         )
     } else if (network_ReceivedString_FromControllerJoystick_Str_ParamIn == "left") {
         images.createImage(`
@@ -195,7 +214,7 @@ function bot_Servo_Motors_Basic_Fn (network_ReceivedString_FromControllerJoystic
         quest_Motors.quest_Set_PowerMotorsViaBlueRedBlackPins_Func(
         quest_PortGroup_BlueRedBlack_PortIds_Enum.S1_MotorWheel_Left__S0_MotorWheel_Right,
         0,
-        50
+        config_motorTurn
         )
     } else if (network_ReceivedString_FromControllerJoystick_Str_ParamIn == "right") {
         images.createImage(`
@@ -210,7 +229,7 @@ function bot_Servo_Motors_Basic_Fn (network_ReceivedString_FromControllerJoystic
         )
         quest_Motors.quest_Set_PowerMotorsViaBlueRedBlackPins_Func(
         quest_PortGroup_BlueRedBlack_PortIds_Enum.S1_MotorWheel_Left__S0_MotorWheel_Right,
-        50,
+        config_motorTurn,
         0
         )
     } else if (network_ReceivedString_FromControllerJoystick_Str_ParamIn == "stop") {
@@ -230,6 +249,7 @@ function bot_Servo_Motors_Basic_Fn (network_ReceivedString_FromControllerJoystic
     }
 }
 function bot_Servo_Motors_Turbo_Fn (network_ReceivedString_FromControllerJoystick_Str_ParamIn: string) {
+    //// jwc 26-0122-1300: Phase 2A Step 3 - Replace hardcoded turbo values with config variables
     if (network_ReceivedString_FromControllerJoystick_Str_ParamIn == "forward_turbo") {
         images.createImage(`
             . . # . .
@@ -244,8 +264,8 @@ function bot_Servo_Motors_Turbo_Fn (network_ReceivedString_FromControllerJoystic
         // //jwc o roboQuest.powerMotorsViaBlueRedBlackPins(PortGroup_BlueRedBlack__PortIds__Enum.S1_MotorLeft__S0_MotorRight, motor_Power_ZERO_INT, motor_Power_ZERO_INT)
         quest_Motors.quest_Set_PowerMotorsViaBlueRedBlackPins_Func(
         quest_PortGroup_BlueRedBlack_PortIds_Enum.S1_MotorWheel_Left__S0_MotorWheel_Right,
-        90,
-        90
+        config_turboFwd,
+        config_turboFwd
         )
     } else if (network_ReceivedString_FromControllerJoystick_Str_ParamIn == "backward_turbo") {
         images.createImage(`
@@ -261,8 +281,8 @@ function bot_Servo_Motors_Turbo_Fn (network_ReceivedString_FromControllerJoystic
         // //jwc o roboQuest.powerMotorsViaBlueRedBlackPins(PortGroup_BlueRedBlack__PortIds__Enum.S1_MotorLeft__S0_MotorRight, motor_Power_ZERO_INT, motor_Power_ZERO_INT)
         quest_Motors.quest_Set_PowerMotorsViaBlueRedBlackPins_Func(
         quest_PortGroup_BlueRedBlack_PortIds_Enum.S1_MotorWheel_Left__S0_MotorWheel_Right,
-        -90,
-        -90
+        -config_turboBwd,
+        -config_turboBwd
         )
     } else if (network_ReceivedString_FromControllerJoystick_Str_ParamIn == "left_turbo") {
         images.createImage(`
@@ -279,7 +299,7 @@ function bot_Servo_Motors_Turbo_Fn (network_ReceivedString_FromControllerJoystic
         quest_Motors.quest_Set_PowerMotorsViaBlueRedBlackPins_Func(
         quest_PortGroup_BlueRedBlack_PortIds_Enum.S1_MotorWheel_Left__S0_MotorWheel_Right,
         0,
-        80
+        config_turboTurn
         )
     } else if (network_ReceivedString_FromControllerJoystick_Str_ParamIn == "right_turbo") {
         images.createImage(`
@@ -295,7 +315,7 @@ function bot_Servo_Motors_Turbo_Fn (network_ReceivedString_FromControllerJoystic
         // //jwc o roboQuest.powerMotorsViaBlueRedBlackPins(PortGroup_BlueRedBlack__PortIds__Enum.S1_MotorLeft__S0_MotorRight, motor_Power_ZERO_INT, motor_Power_ZERO_INT)
         quest_Motors.quest_Set_PowerMotorsViaBlueRedBlackPins_Func(
         quest_PortGroup_BlueRedBlack_PortIds_Enum.S1_MotorWheel_Left__S0_MotorWheel_Right,
-        80,
+        config_turboTurn,
         0
         )
     }
@@ -523,9 +543,189 @@ function bot_Servo_Arms__Position_Absolute__Fn (network_ReceivedString_FromContr
     }
 }
 function settingsOverride_FlashMem_Load_Func () {
-    serial.writeLine("* 26-0121-1720: FlashPairs=" + flashstorage.size() + "|FlashGet=" + flashstorage.get("netGroupChannel") + "->ParsedToNum=" + parseFloat(flashstorage.get("netGroupChannel")) + "|'network_GroupChannel_MyBotAndController_Base0_Int'[OLD]=" + convertToText(network_GroupChannel_MyBotAndController_Base0_Int))
-    network_GroupChannel_MyBotAndController_Base0_Int = parseFloat(flashstorage.getOrDefault("netGroupChannel", convertToText(network_GroupChannel_MyBotAndController_Base0_Int)))
-    serial.writeLine("* 26-0121-1721: settingsOverride_FlashMem_Load_Func::" + "'network_GroupChannel_MyBotAndController_Base0_Int'[NEW]=" + convertToText(network_GroupChannel_MyBotAndController_Base0_Int))
+    //// jwc 26-0122-1230: Phase 2A - Expanded to load all 10 config settings
+    serial.writeLine("* 26-0122-1230: Loading config from flash: Pairs=" + flashstorage.size())
+    
+    //// jwc 26-0122-1230: Load all 10 configuration settings from flash (with defaults)
+    config_groupChanl = parseFloat(flashstorage.getOrDefault("groupChanl", convertToText(config_groupChanl)))
+    config_motorFwd = parseFloat(flashstorage.getOrDefault("motorFwd", convertToText(config_motorFwd)))
+    config_motorBwd = parseFloat(flashstorage.getOrDefault("motorBwd", convertToText(config_motorBwd)))
+    config_motorTurn = parseFloat(flashstorage.getOrDefault("motorTurn", convertToText(config_motorTurn)))
+    config_turboFwd = parseFloat(flashstorage.getOrDefault("turboFwd", convertToText(config_turboFwd)))
+    config_turboBwd = parseFloat(flashstorage.getOrDefault("turboBwd", convertToText(config_turboBwd)))
+    config_turboTurn = parseFloat(flashstorage.getOrDefault("turboTurn", convertToText(config_turboTurn)))
+    config_servoMin = parseFloat(flashstorage.getOrDefault("servoMin", convertToText(config_servoMin)))
+    config_servoMax = parseFloat(flashstorage.getOrDefault("servoMax", convertToText(config_servoMax)))
+    config_servoInc = parseFloat(flashstorage.getOrDefault("servoInc", convertToText(config_servoInc)))
+    
+    //// jwc 26-0122-1230: Update legacy channel variable for backward compatibility
+    network_GroupChannel_MyBotAndController_Base0_Int = config_groupChanl
+    
+    serial.writeLine("* 26-0122-1230: Config loaded: Ch=" + config_groupChanl + " MotorFwd=" + config_motorFwd + " ServoInc=" + config_servoInc)
+}
+function config_ParseCommand_Func (cmdString: string): boolean {
+    //// jwc 26-0122-1330: Phase 2A Step 4 - Command parser for remote configuration
+    //// Format: "CFG:paramName=value" or "GET:paramName" or "GET:ALL"
+    
+    if (cmdString.substr(0, 4) == "CFG:") {
+        //// Parse SET command: "CFG:motorFwd=70"
+        let paramPart = cmdString.substr(4, cmdString.length - 4)
+        let equalPos = paramPart.indexOf("=")
+        
+        if (equalPos > 0) {
+            let paramName = paramPart.substr(0, equalPos)
+            let paramValue = parseFloat(paramPart.substr(equalPos + 1, paramPart.length - equalPos - 1))
+            
+            //// Update config variable based on parameter name
+            if (paramName == "groupChanl") {
+                if (paramValue >= 0 && paramValue <= 99) {
+                    config_groupChanl = paramValue
+                    network_GroupChannel_MyBotAndController_Base0_Int = config_groupChanl
+                    radio.setGroup(network_GroupChannel_MyBotAndController_Base0_Int)
+                    settingsOverride_FlashMem_Save_Func()
+                    serial.writeLine("* CFG OK: groupChanl=" + config_groupChanl)
+                    return true
+                }
+            } else if (paramName == "motorFwd") {
+                if (paramValue >= 0 && paramValue <= 100) {
+                    config_motorFwd = paramValue
+                    settingsOverride_FlashMem_Save_Func()
+                    serial.writeLine("* CFG OK: motorFwd=" + config_motorFwd)
+                    return true
+                }
+            } else if (paramName == "motorBwd") {
+                if (paramValue >= 0 && paramValue <= 100) {
+                    config_motorBwd = paramValue
+                    settingsOverride_FlashMem_Save_Func()
+                    serial.writeLine("* CFG OK: motorBwd=" + config_motorBwd)
+                    return true
+                }
+            } else if (paramName == "motorTurn") {
+                if (paramValue >= 0 && paramValue <= 100) {
+                    config_motorTurn = paramValue
+                    settingsOverride_FlashMem_Save_Func()
+                    serial.writeLine("* CFG OK: motorTurn=" + config_motorTurn)
+                    return true
+                }
+            } else if (paramName == "turboFwd") {
+                if (paramValue >= 0 && paramValue <= 100) {
+                    config_turboFwd = paramValue
+                    settingsOverride_FlashMem_Save_Func()
+                    serial.writeLine("* CFG OK: turboFwd=" + config_turboFwd)
+                    return true
+                }
+            } else if (paramName == "turboBwd") {
+                if (paramValue >= 0 && paramValue <= 100) {
+                    config_turboBwd = paramValue
+                    settingsOverride_FlashMem_Save_Func()
+                    serial.writeLine("* CFG OK: turboBwd=" + config_turboBwd)
+                    return true
+                }
+            } else if (paramName == "turboTurn") {
+                if (paramValue >= 0 && paramValue <= 100) {
+                    config_turboTurn = paramValue
+                    settingsOverride_FlashMem_Save_Func()
+                    serial.writeLine("* CFG OK: turboTurn=" + config_turboTurn)
+                    return true
+                }
+            } else if (paramName == "servoMin") {
+                if (paramValue >= 0 && paramValue <= 220) {
+                    config_servoMin = paramValue
+                    servoArm_MIN_DEGREES_INT = config_servoMin
+                    settingsOverride_FlashMem_Save_Func()
+                    serial.writeLine("* CFG OK: servoMin=" + config_servoMin)
+                    return true
+                }
+            } else if (paramName == "servoMax") {
+                if (paramValue >= 0 && paramValue <= 220) {
+                    config_servoMax = paramValue
+                    servoArm_MAX_DEGREES_INT = config_servoMax
+                    settingsOverride_FlashMem_Save_Func()
+                    serial.writeLine("* CFG OK: servoMax=" + config_servoMax)
+                    return true
+                }
+            } else if (paramName == "servoInc") {
+                if (paramValue >= 1 && paramValue <= 45) {
+                    config_servoInc = paramValue
+                    servoArm_Increment_Degrees_Int = config_servoInc
+                    settingsOverride_FlashMem_Save_Func()
+                    serial.writeLine("* CFG OK: servoInc=" + config_servoInc)
+                    return true
+                }
+            }
+            serial.writeLine("* CFG ERR: Invalid param or value")
+            return false
+        }
+    } else if (cmdString.substr(0, 4) == "GET:") {
+        //// Parse GET command: "GET:motorFwd" or "GET:ALL"
+        let paramName = cmdString.substr(4, cmdString.length - 4)
+        
+        if (paramName == "ALL") {
+            config_SendAllValues_Func()
+            return true
+        } else {
+            config_SendSingleValue_Func(paramName)
+            return true
+        }
+    }
+    
+    return false
+}
+function config_SendAllValues_Func () {
+    //// jwc 26-0122-1400: Phase 2A Step 5 - Send all configuration values via radio
+    serial.writeLine("* CFG SEND ALL: Sending all 10 config values")
+    
+    //// Send all 10 configuration values as individual radio messages
+    radio.sendString("VAL:groupChanl=" + config_groupChanl)
+    radio.sendString("VAL:motorFwd=" + config_motorFwd)
+    radio.sendString("VAL:motorBwd=" + config_motorBwd)
+    radio.sendString("VAL:motorTurn=" + config_motorTurn)
+    radio.sendString("VAL:turboFwd=" + config_turboFwd)
+    radio.sendString("VAL:turboBwd=" + config_turboBwd)
+    radio.sendString("VAL:turboTurn=" + config_turboTurn)
+    radio.sendString("VAL:servoMin=" + config_servoMin)
+    radio.sendString("VAL:servoMax=" + config_servoMax)
+    radio.sendString("VAL:servoInc=" + config_servoInc)
+    
+    serial.writeLine("* CFG SEND ALL: Complete")
+}
+function config_SendSingleValue_Func (paramName: string) {
+    //// jwc 26-0122-1400: Phase 2A Step 5 - Send single configuration value via radio
+    
+    if (paramName == "groupChanl") {
+        radio.sendString("VAL:groupChanl=" + config_groupChanl)
+        serial.writeLine("* CFG SEND: groupChanl=" + config_groupChanl)
+    } else if (paramName == "motorFwd") {
+        radio.sendString("VAL:motorFwd=" + config_motorFwd)
+        serial.writeLine("* CFG SEND: motorFwd=" + config_motorFwd)
+    } else if (paramName == "motorBwd") {
+        radio.sendString("VAL:motorBwd=" + config_motorBwd)
+        serial.writeLine("* CFG SEND: motorBwd=" + config_motorBwd)
+    } else if (paramName == "motorTurn") {
+        radio.sendString("VAL:motorTurn=" + config_motorTurn)
+        serial.writeLine("* CFG SEND: motorTurn=" + config_motorTurn)
+    } else if (paramName == "turboFwd") {
+        radio.sendString("VAL:turboFwd=" + config_turboFwd)
+        serial.writeLine("* CFG SEND: turboFwd=" + config_turboFwd)
+    } else if (paramName == "turboBwd") {
+        radio.sendString("VAL:turboBwd=" + config_turboBwd)
+        serial.writeLine("* CFG SEND: turboBwd=" + config_turboBwd)
+    } else if (paramName == "turboTurn") {
+        radio.sendString("VAL:turboTurn=" + config_turboTurn)
+        serial.writeLine("* CFG SEND: turboTurn=" + config_turboTurn)
+    } else if (paramName == "servoMin") {
+        radio.sendString("VAL:servoMin=" + config_servoMin)
+        serial.writeLine("* CFG SEND: servoMin=" + config_servoMin)
+    } else if (paramName == "servoMax") {
+        radio.sendString("VAL:servoMax=" + config_servoMax)
+        serial.writeLine("* CFG SEND: servoMax=" + config_servoMax)
+    } else if (paramName == "servoInc") {
+        radio.sendString("VAL:servoInc=" + config_servoInc)
+        serial.writeLine("* CFG SEND: servoInc=" + config_servoInc)
+    } else {
+        radio.sendString("VAL:ERROR=Unknown parameter: " + paramName)
+        serial.writeLine("* CFG SEND ERR: Unknown param: " + paramName)
+    }
 }
 input.onButtonPressed(Button.AB, function () {
     // //jwc o if (device_Type_Controller_Bool || device_Type_Bot_Bool) {
@@ -964,6 +1164,18 @@ setup_BotAndController_Func()
         )
     }
 }
+//// jwc 26-0122-1230: Phase 2A - Remote Configuration Variables (10 settings)
+let config_groupChanl = 1       // Group channel (0-99)
+let config_motorFwd = 60        // Motor forward power (0-100%)
+let config_motorBwd = 60        // Motor backward power (0-100%)
+let config_motorTurn = 50       // Motor turn power (0-100%)
+let config_turboFwd = 90        // Turbo forward power (0-100%)
+let config_turboBwd = 90        // Turbo backward power (0-100%)
+let config_turboTurn = 80       // Turbo turn power (0-100%)
+let config_servoMin = 0         // Servo arm minimum degrees (0-220)
+let config_servoMax = 220       // Servo arm maximum degrees (0-220)
+let config_servoInc = 15        // Servo arm increment degrees (1-45)
+
 let _system_Github_VER_STRING = ""
 let controller__Polar_OriginAtCenter__MagnitudePixel__PreviousCycle__Int = 0
 let servoArm_DEFAULT_DEGREES_INT = 0
