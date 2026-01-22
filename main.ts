@@ -11,6 +11,24 @@ function screen_PlotNewDot_ClearOldDot_WithHeartbeat_Func (screen_x_new_num: num
     screen_XY_Brightness_Old_Num = led.pointBrightness(screen_x_new_num, screen_y_new_num)
     led.plotBrightness(screen_x_new_num, screen_y_new_num, screenBrightness_Heartbeat_Count_Int)
 }
+function settingsOverride_FlashMem_Save_Func () {
+    if (true) {
+        if (false) {
+            quest_Note_1.quest_Show_String_For_Note_Small_Func(
+            "\\/ For Testing"
+            )
+            network_GroupChannel_MyBotAndController_Base0_Int = 12
+        }
+        quest_Note_1.quest_Show_String_For_Note_Small_Func(
+        "Appears 15 char max, can have '_, upper/lower case"
+        )
+        quest_Note_1.quest_Show_String_For_Note_Small_Func(
+        "Reflashing Code seems to clear Flash"
+        )
+        flashstorage.put("netGroupChannel", convertToText(network_GroupChannel_MyBotAndController_Base0_Int))
+        serial.writeLine("* 26-0121-1730: settingsOverride_FlashMem_Save_Func:: FlashPairs=" + flashstorage.size() + "|FlashGet=" + flashstorage.get("netGroupChannel") + "->ParsedToNum=" + parseFloat(flashstorage.get("netGroupChannel")) + "|'network_GroupChannel_MyBotAndController_Base0_Int'=" + convertToText(network_GroupChannel_MyBotAndController_Base0_Int))
+    }
+}
 function screen_Clear_Func () {
     for (let index_X = 0; index_X <= 4; index_X++) {
         for (let index_Y = 0; index_Y <= 4; index_Y++) {
@@ -429,6 +447,11 @@ function bot_Servo_Arms__Position_Absolute__Fn (network_ReceivedString_FromContr
         )
     }
 }
+function settingsOverride_FlashMem_Load_Func () {
+    serial.writeLine("* 26-0121-1720: FlashPairs=" + flashstorage.size() + "|FlashGet=" + flashstorage.get("netGroupChannel") + "->ParsedToNum=" + parseFloat(flashstorage.get("netGroupChannel")) + "|'network_GroupChannel_MyBotAndController_Base0_Int'[OLD]=" + convertToText(network_GroupChannel_MyBotAndController_Base0_Int))
+    network_GroupChannel_MyBotAndController_Base0_Int = parseFloat(flashstorage.getOrDefault("netGroupChannel", convertToText(network_GroupChannel_MyBotAndController_Base0_Int)))
+    serial.writeLine("* 26-0121-1721: settingsOverride_FlashMem_Load_Func::" + "'network_GroupChannel_MyBotAndController_Base0_Int'[NEW]=" + convertToText(network_GroupChannel_MyBotAndController_Base0_Int))
+}
 input.onButtonPressed(Button.AB, function () {
     // //jwc o if (device_Type_Controller_Bool || device_Type_Bot_Bool) {
     if (_system_Hw_DeviceType__Now__Id_Int == _system_Hw_DeviceType__Bot__ID_INT || _system_Hw_DeviceType__Now__Id_Int == _system_Hw_DeviceType__Controller_Joystick__ID_INT) {
@@ -468,6 +491,7 @@ input.onButtonPressed(Button.AB, function () {
             _system_Sw_ModeState__Now__Id_Int = _system_Sw_ModeState__Run__AndShow_01_DeviceType__ID_INT
             network_GroupChannel_MyBotAndController_Base0_Int = network_GroupChannel_MyBotAndController_Base0__Digit_Hundreds__Int * 100 + (network_GroupChannel_MyBotAndController_Base0__Digit_Tens__Int * 10 + network_GroupChannel_MyBotAndController_Base0__Digit_Ones__Int * 1)
             radio.setGroup(network_GroupChannel_MyBotAndController_Base0_Int)
+            settingsOverride_FlashMem_Save_Func()
         }
     } else if (_system_Hw_DeviceType__Now__Id_Int == _system_Hw_DeviceType__Null__ID_INT) {
         // //jwc debug: serial.writeLine("HW_Null: SW_Null >> SW_Edit")
@@ -493,10 +517,11 @@ input.onButtonPressed(Button.AB, function () {
             _system_Sw_ModeState__Now__Id_Int = _system_Sw_ModeState__Null__ID_INT
             network_GroupChannel_MyBotAndController_Base0_Int = network_GroupChannel_MyBotAndController_Base0__Digit_Hundreds__Int * 100 + (network_GroupChannel_MyBotAndController_Base0__Digit_Tens__Int * 10 + network_GroupChannel_MyBotAndController_Base0__Digit_Ones__Int * 1)
             radio.setGroup(network_GroupChannel_MyBotAndController_Base0_Int)
+            settingsOverride_FlashMem_Save_Func()
         }
     }
-    if (false) {
-        serial.writeLine("24-0714-2351> " + network_GroupChannel_MyBotAndController_Base0_Int + " " + network_GroupChannel_MyBotAndController_Base0__Digit_Hundreds__Int + " " + network_GroupChannel_MyBotAndController_Base0__Digit_Tens__Int + " " + network_GroupChannel_MyBotAndController_Base0__Digit_Ones__Int)
+    if (true) {
+        serial.writeLine("* 26-0121-1740: Network_GroupChannel Override Stack: 'network_GroupChannel_MyBotAndController_Base0_Int'= " + network_GroupChannel_MyBotAndController_Base0_Int + "|100x=" + network_GroupChannel_MyBotAndController_Base0__Digit_Hundreds__Int + "|10x=" + network_GroupChannel_MyBotAndController_Base0__Digit_Tens__Int + "|1x=" + network_GroupChannel_MyBotAndController_Base0__Digit_Ones__Int)
     }
     quest_Note_6.quest_Show_String_For_Note_Big_Func(
     "Level 2.1: Variables_n_Constants_Yes"
@@ -792,6 +817,7 @@ function botModeInIdle_Fn () {
 function setup_Code_For_System_Func () {
     if (true) {
         setup_System_Variables__UserCustomizable_Not__Func()
+        settingsOverride_FlashMem_Load_Func()
         setup_Network_Func()
 setup_BotAndController_Func()
     }
@@ -912,16 +938,6 @@ setup_BotAndController_Func()
         if (false) {
             controller__Polar_OriginAtCenter__IdleCount_ModulusNetworkThrottle_ADD_INT = 5
             controller__Polar_OriginAtCenter__IdleCount_ModulusNetworkThrottle_ADD_INT = 10
-        }
-    }
-    if (true) {
-        if (true) {
-            network_GroupChannel_MyBotAndController_Base0_Int = 55
-            quest_Note_1.quest_Show_String_For_Note_Small_Func(
-            "Appears 15 char max"
-            )
-            flashstorage.put("netGroupChannel", convertToText(network_GroupChannel_MyBotAndController_Base0_Int))
-            serial.writeLine("* 26-0121-1720:" + flashstorage.size() + "|" + flashstorage.get("netGroupChannel") + "->" + parseFloat(flashstorage.get("netGroupChannel")) + "|" + convertToText(network_GroupChannel_MyBotAndController_Base0_Int))
         }
     }
     if (true) {
